@@ -1,5 +1,6 @@
+import 'package:fgitapp/common/constants/app_colors_constant.dart';
 import 'package:fgitapp/common/widgets/app_bar/custom_app_bar.dart';
-import 'package:fgitapp/utils/app_colors_constant.dart';
+
 import 'package:flutter/material.dart';
 
 class BasePage extends StatefulWidget {

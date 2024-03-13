@@ -1,9 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:fgitapp/features/users/business_logic/user_bloc/user_bloc.dart';
+import 'package:fgitapp/common/constants/app_colors_constant.dart';
+import 'package:fgitapp/common/constants/image_constant.dart';
 import 'package:fgitapp/features/users/business_logic/user_detail_bloc/user_detail_bloc.dart';
-import 'package:fgitapp/utils/app_colors_constant.dart';
-import 'package:fgitapp/utils/app_text_style.dart';
-import 'package:fgitapp/utils/image_constant.dart';
 import 'package:flutter/material.dart';
 
 class ProfileCard extends StatefulWidget {
@@ -22,7 +20,7 @@ class _ProfileCardState extends State<ProfileCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: MediaQuery.of(context).size.width,
       height: MediaQuery.of(context).size.height * 0.28,
       child: Stack(

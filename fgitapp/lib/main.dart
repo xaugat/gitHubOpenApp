@@ -1,8 +1,10 @@
 import 'package:fgitapp/features/users/business_logic/user_bloc/user_bloc.dart';
 import 'package:fgitapp/features/users/business_logic/user_detail_bloc/user_detail_bloc.dart';
+import 'package:fgitapp/features/users/business_logic/user_repo_cubit/user_projects_cubit.dart';
 import 'package:fgitapp/injector.dart/app_injector.dart';
 import 'package:fgitapp/helpers.dart/get_root_url.dart';
 import 'package:fgitapp/features/users/presentation/ui/pages/user_list_page.dart';
+import 'package:fgitapp/utils/pref_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -17,6 +19,7 @@ enum BuildFlavor { local, dev, staging, live }
 class AppBuilder {
   static runWithConfig(BuildFlavor buildFlavor) async {
     WidgetsFlutterBinding.ensureInitialized();
+    await SharedPref.initializeSharedPreference();
     await setupDi(
         getRootUrl(buildFlavor)); // build app according to build flavor
 
@@ -34,16 +37,15 @@ class MyApp extends StatelessWidget {
       // registering all the instance of bloc used in the initial phase.
       providers: [
         BlocProvider<UserBloc>(
-            create: (BuildContext context) =>
-                UserBloc(const UserInitialState())),
+            create: (BuildContext context) => getIt<UserBloc>()),
         BlocProvider<UserDetailBloc>(
-            create: (BuildContext context) =>
-                UserDetailBloc(UserDetailInitial())),
+            create: (BuildContext context) => getIt<UserDetailBloc>()),
+        BlocProvider<UserProjectsCubit>(
+            create: (BuildContext context) => getIt<UserProjectsCubit>()),
       ],
       child: MaterialApp(
         title: 'GitApp',
         theme: ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
         home: const UserListPage(),

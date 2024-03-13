@@ -1,13 +1,10 @@
+import 'package:fgitapp/common/constants/app_colors_constant.dart';
+import 'package:fgitapp/common/constants/app_text_style.dart';
+import 'package:fgitapp/common/constants/string_constants.dart';
 import 'package:fgitapp/common/widgets/base_page_widget.dart';
-import 'package:fgitapp/features/users/business_logic/user_bloc/user_bloc.dart';
 import 'package:fgitapp/features/users/business_logic/user_detail_bloc/user_detail_bloc.dart';
-import 'package:fgitapp/features/users/data/models/user_detail_models.dart/user_detail_response_model.dart';
-import 'package:fgitapp/features/users/presentation/ui/pages/user_list_page.dart';
+import 'package:fgitapp/features/users/presentation/ui/pages/user_repo_list_page.dart';
 import 'package:fgitapp/features/users/presentation/ui/pages/widgets/user_profile_card.dart';
-import 'package:fgitapp/utils/app_colors_constant.dart';
-import 'package:fgitapp/utils/app_icons.dart';
-import 'package:fgitapp/utils/app_text_style.dart';
-import 'package:fgitapp/utils/image_constant.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -31,6 +28,11 @@ class _UserDetailPageState extends State<UserDetailPage> {
     getUserDetails(widget.userId);
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   getUserDetails(String userId) {
     BlocProvider.of<UserDetailBloc>(context)
         .add(GetUserDetailsEvent(userId: userId));
@@ -39,12 +41,6 @@ class _UserDetailPageState extends State<UserDetailPage> {
   @override
   Widget build(BuildContext context) {
     return BasePage(
-        // leadingWidget: IconButton(
-        //   icon: AppIcons.backButton,
-        //   onPressed: () {
-
-        //   },
-        // ),
         title: Text(
           widget.userId,
           style: AppTextStyle.title,
@@ -88,9 +84,13 @@ class _UserDetailPageState extends State<UserDetailPage> {
                   showProfileDetailList(state: state),
                 ],
               );
+            } else if (state is GetUserDetailsFailureState) {
+              return Center(
+                child: Text(ResString.error),
+              );
             } else {
-              return const Column(
-                children: [],
+              return Center(
+                child: CircularProgressIndicator(),
               );
             }
           },
@@ -100,15 +100,31 @@ class _UserDetailPageState extends State<UserDetailPage> {
   showProfileDetailList({required GetUserDetailsSuccessState state}) {
     List<UserProfileDetail> profileDetailCardItems = [
       UserProfileDetail(
-        title: 'Repositories',
-        subTitle: 'View all repositories details',
-        url: state.userDetailsResponseModel.reposUrl,
-      ),
+          title: 'Repositories',
+          subTitle: 'View all repositories details',
+          url: state.userDetailsResponseModel.reposUrl,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => UserRepoListPage(
+                        userId: widget.userId.toString(),
+                      )),
+            );
+          }),
       UserProfileDetail(
-        title: 'Events',
-        subTitle: 'View all event details',
-        url: state.userDetailsResponseModel.reposUrl,
-      ),
+          title: 'Events',
+          subTitle: 'View all event details',
+          url: state.userDetailsResponseModel.reposUrl,
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => UserRepoListPage(
+                        userId: widget.userId.toString(),
+                      )),
+            );
+          }),
     ];
 
     return ListView.builder(
@@ -119,10 +135,11 @@ class _UserDetailPageState extends State<UserDetailPage> {
             padding: const EdgeInsets.only(left: 8.0, right: 8),
             child: Card(
               child: ListTile(
+                onTap: profileDetailCardItems[index].onTap,
                 title: Text(profileDetailCardItems[index].title.toString()),
                 subtitle:
                     Text(profileDetailCardItems[index].subTitle.toString()),
-                trailing: Icon(Icons.arrow_forward_ios),
+                trailing: const Icon(Icons.arrow_forward_ios),
               ),
             ),
           );
@@ -153,7 +170,11 @@ class UserProfileDetail {
   String? title;
   String? subTitle;
   String? url;
+  VoidCallback? onTap;
 
   UserProfileDetail(
-      {required this.title, required this.subTitle, required this.url});
+      {required this.title,
+      required this.subTitle,
+      required this.url,
+      required this.onTap});
 }

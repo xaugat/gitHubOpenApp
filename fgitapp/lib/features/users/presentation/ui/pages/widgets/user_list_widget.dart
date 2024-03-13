@@ -1,5 +1,8 @@
+import 'package:fgitapp/common/constants/app_colors_constant.dart';
+import 'package:fgitapp/common/constants/app_text_style.dart';
 import 'package:fgitapp/features/users/business_logic/user_bloc/user_bloc.dart';
 import 'package:fgitapp/features/users/presentation/ui/pages/user_detail_page.dart';
+
 import 'package:flutter/material.dart';
 
 class UserListWidget extends StatelessWidget {
@@ -33,10 +36,15 @@ class UserListWidget extends StatelessWidget {
                     state.usersListResponseModel[index].avatarUrl.toString(),
                   ),
                 ),
-                title:
-                    Text(state.usersListResponseModel[index].login.toString()),
-                subtitle:
-                    Text(state.usersListResponseModel[index].nodeId.toString()),
+                title: Text(
+                  state.usersListResponseModel[index].login.toString(),
+                  style: AppTextStyle.listTileTitleTextStyle,
+                ),
+                // ignore: prefer_const_constructors
+                trailing: Icon(
+                  Icons.arrow_forward_ios_outlined,
+                  color: AppColors.darkGreyColor,
+                ),
               ),
               const Divider()
             ],

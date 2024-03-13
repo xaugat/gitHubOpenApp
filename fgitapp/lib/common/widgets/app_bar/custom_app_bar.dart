@@ -1,5 +1,6 @@
-import 'package:fgitapp/utils/app_colors_constant.dart';
-import 'package:fgitapp/utils/app_icons.dart';
+import 'package:fgitapp/common/constants/app_colors_constant.dart';
+import 'package:fgitapp/common/constants/app_icons.dart';
+
 import 'package:flutter/material.dart';
 
 class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
@@ -43,15 +44,13 @@ class CustomAppBar extends StatelessWidget implements PreferredSizeWidget {
       title: title ?? const Text(''),
       leading: showBackButton == false
           ? leadingWidget
-          : Builder(
-              builder: (BuildContext context) => IconButton(
-                  onPressed: () {
-                    navigate != null
-                        ? Navigator.pushNamed(context, navigate!)
-                        : Navigator.pop(context);
-                  },
-                  icon: leadingWidget ?? AppIcons.backButton),
-            ),
+          : IconButton(
+              onPressed: () {
+                navigate != null
+                    ? Navigator.pushNamed(context, navigate!)
+                    : Navigator.pop(context);
+              },
+              icon: leadingWidget ?? AppIcons.backButton),
       actions: trailing ?? [const Text('')],
       bottom: bottom == null
           ? null

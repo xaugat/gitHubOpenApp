@@ -2,11 +2,11 @@ import 'dart:io';
 
 import 'package:dio/dio.dart' as dio;
 import 'package:dio/dio.dart';
+import 'package:fgitapp/common/constants/api_constants.dart';
+import 'package:fgitapp/common/constants/string_constants.dart';
 import 'package:fgitapp/helpers.dart/toast.dart';
-import 'package:fgitapp/utils/string_constants.dart';
 
 import '../../helpers.dart/applog.dart';
-import '../../utils/api_constants.dart';
 
 class CallApi {
   final String baseUrl;

@@ -1,6 +1,5 @@
-import 'dart:io';
 
-import 'package:fgitapp/utils/app_colors_constant.dart';
+import 'package:fgitapp/common/constants/app_colors_constant.dart';
 import 'package:flutter/material.dart';
 
 class AppIcons {
@@ -33,8 +32,8 @@ class AppIcons {
 
   static const contactUs = Icon(Icons.phone);
 
-  static var backButton = Icon(
-    Platform.isAndroid ? Icons.arrow_back : Icons.arrow_back_ios_new,
+  static var backButton = const Icon(
+    Icons.arrow_back_ios_new,
     color: AppColors.whiteColor,
     size: 24,
   );

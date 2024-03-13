@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:fgitapp/common/constants/api_constants.dart';
 import 'package:fgitapp/common/networks/dio_request.dart';
-import 'package:fgitapp/utils/api_constants.dart';
 
 class UserDataProvider {
   CallApi callApi;
@@ -16,5 +16,11 @@ class UserDataProvider {
     var userResponse = await callApi
         .getData(ApiUrls.getUserDetails.replaceFirst('__userid__', userId));
     return userResponse;
+  }
+
+  Future<Response> getUserProjectList(String userId) async {
+    var userProjectListResponse = await callApi
+        .getData(ApiUrls.getUserReposList.replaceFirst('__userid__', userId));
+    return userProjectListResponse;
   }
 }
