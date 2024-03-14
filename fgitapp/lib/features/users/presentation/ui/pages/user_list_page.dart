@@ -6,6 +6,7 @@ import 'package:fgitapp/common/widgets/app_bar/custom_app_bar.dart';
 import 'package:fgitapp/features/users/business_logic/user_bloc/user_bloc.dart';
 import 'package:fgitapp/features/users/presentation/ui/pages/widgets/user_list_widget.dart';
 import 'package:fgitapp/helpers.dart/toast.dart';
+import 'package:fgitapp/router/route_paths.dart';
 import 'package:fgitapp/utils/pref_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -37,6 +38,7 @@ class _UserListPageState extends State<UserListPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: AppColors.appThemeLightColor,
       body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
         if (state is GetAllUsersSuccessState) {
           return GestureDetector(
@@ -52,26 +54,57 @@ class _UserListPageState extends State<UserListPage> {
               child: CustomScrollView(
                 slivers: [
                   SliverAppBar(
+                    backgroundColor: AppColors.appThemeColor,
                     automaticallyImplyLeading: false,
                     pinned: true,
                     centerTitle: true,
-                    title: const Text(
+                    title: Text(
                       'GitApp',
-                      style: AppTextStyle.heading,
+                      style: AppTextStyle.heading
+                          .copyWith(color: AppColors.whiteColor),
                     ),
-                    expandedHeight: MediaQuery.of(context).size.height * 0.25,
-                    bottom: const CustomAppBar(
-                      colors: Colors.white,
-                      showBackButton: false,
-                      title: SizedBox(
-                        height: 45,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              suffixIcon: Icon(Icons.search),
-                              border: OutlineInputBorder(),
-                              hintText: 'Search username',
-                              hintStyle:
-                                  TextStyle(color: AppColors.darkGreyColor)),
+                    expandedHeight: MediaQuery.of(context).size.height * 0.30,
+                    bottom: AppBar(
+                      backgroundColor: AppColors.appThemeLightColor,
+                      // showBackButton: false,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.vertical(
+                          top: Radius.circular(20),
+                        ),
+                      ),
+
+                      centerTitle: true,
+
+                      // ignore: prefer_const_constructors
+                      title: GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, RoutePaths.searchPage);
+                        },
+                        child: SizedBox(
+                          height: 55,
+                          child: Padding(
+                            padding: const EdgeInsets.all(5.0),
+                            child: Container(
+                              width: MediaQuery.of(context).size.width,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  border: Border.all()),
+                              child: const Padding(
+                                padding: EdgeInsets.all(8.0),
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Search',
+                                      style: AppTextStyle.subtitle,
+                                    ),
+                                    Icon(Icons.search),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ),
@@ -98,11 +131,13 @@ class _UserListPageState extends State<UserListPage> {
             child: Text(state.errorModel.message.toString()),
           ));
         } else {
-          return Center(
+          return const Center(
             child: CircularProgressIndicator(),
           );
         }
       }),
     );
   }
+
+  searchUser() {}
 }

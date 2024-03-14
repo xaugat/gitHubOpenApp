@@ -2,6 +2,7 @@ import 'package:fgitapp/common/constants/app_colors_constant.dart';
 import 'package:fgitapp/common/constants/app_text_style.dart';
 import 'package:fgitapp/features/users/business_logic/user_bloc/user_bloc.dart';
 import 'package:fgitapp/features/users/presentation/ui/pages/user_detail_page.dart';
+import 'package:fgitapp/router/route_paths.dart';
 
 import 'package:flutter/material.dart';
 
@@ -22,13 +23,11 @@ class UserListWidget extends StatelessWidget {
             children: [
               ListTile(
                 onTap: () {
-                  Navigator.push(
+                  Navigator.pushNamed(
                     context,
-                    MaterialPageRoute(
-                        builder: (context) => UserDetailPage(
-                              userId: state.usersListResponseModel[index].login
-                                  .toString(),
-                            )),
+                    RoutePaths.userDetailPage,
+                    arguments:
+                        state.usersListResponseModel[index].login.toString(),
                   );
                 },
                 leading: ClipOval(
@@ -43,10 +42,12 @@ class UserListWidget extends StatelessWidget {
                 // ignore: prefer_const_constructors
                 trailing: Icon(
                   Icons.arrow_forward_ios_outlined,
-                  color: AppColors.darkGreyColor,
+                  color: AppColors.appThemeColor,
                 ),
               ),
-              const Divider()
+              const Divider(
+                color: AppColors.whiteColor,
+              )
             ],
           ),
         );

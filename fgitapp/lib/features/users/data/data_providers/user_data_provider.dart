@@ -23,4 +23,10 @@ class UserDataProvider {
         .getData(ApiUrls.getUserReposList.replaceFirst('__userid__', userId));
     return userProjectListResponse;
   }
+
+  Future<Response> getSearchQuery(String query) async {
+    var userProjectListResponse =
+        await callApi.getData(ApiUrls.search.replaceFirst('__query__', query));
+    return userProjectListResponse;
+  }
 }

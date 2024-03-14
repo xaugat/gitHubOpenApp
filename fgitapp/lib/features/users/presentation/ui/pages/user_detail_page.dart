@@ -5,6 +5,7 @@ import 'package:fgitapp/common/widgets/base_page_widget.dart';
 import 'package:fgitapp/features/users/business_logic/user_detail_bloc/user_detail_bloc.dart';
 import 'package:fgitapp/features/users/presentation/ui/pages/user_repo_list_page.dart';
 import 'package:fgitapp/features/users/presentation/ui/pages/widgets/user_profile_card.dart';
+import 'package:fgitapp/router/route_paths.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -48,41 +49,45 @@ class _UserDetailPageState extends State<UserDetailPage> {
         body: BlocBuilder<UserDetailBloc, UserDetailState>(
           builder: (context, state) {
             if (state is GetUserDetailsSuccessState) {
-              return Column(
-                children: [
-                  ProfileCard(
-                    state: state,
-                  ),
-                  Text(
-                    state.userDetailsResponseModel.name.toString(),
-                    style: AppTextStyle.heading,
-                  ),
-                  Text(
-                    state.userDetailsResponseModel.bio ?? '',
-                    style: AppTextStyle.subtitle,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      showCardDetail(
-                          title: 'Followers',
-                          subTitle: state.userDetailsResponseModel.followers
-                              .toString()),
-                      showCardDetail(
-                          title: 'Following',
-                          subTitle: state.userDetailsResponseModel.following
-                              .toString()),
-                      showCardDetail(
-                          title: 'Repositories',
-                          subTitle: state.userDetailsResponseModel.publicRepos
-                              .toString()),
-                    ],
-                  ),
-                  const SizedBox(
-                    height: 10,
-                  ),
-                  showProfileDetailList(state: state),
-                ],
+              return Container(
+                color: AppColors.appThemeLightColor,
+                child: Column(
+                  children: [
+                    ProfileCard(
+                      state: state,
+                    ),
+                    Text(
+                      state.userDetailsResponseModel.name.toString(),
+                      style: AppTextStyle.heading
+                          .copyWith(color: AppColors.appThemeColor),
+                    ),
+                    Text(
+                      state.userDetailsResponseModel.bio ?? '',
+                      style: AppTextStyle.subtitle,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        showCardDetail(
+                            title: 'Followers',
+                            subTitle: state.userDetailsResponseModel.followers
+                                .toString()),
+                        showCardDetail(
+                            title: 'Following',
+                            subTitle: state.userDetailsResponseModel.following
+                                .toString()),
+                        showCardDetail(
+                            title: 'Repositories',
+                            subTitle: state.userDetailsResponseModel.publicRepos
+                                .toString()),
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    showProfileDetailList(state: state),
+                  ],
+                ),
               );
             } else if (state is GetUserDetailsFailureState) {
               return Center(
@@ -117,13 +122,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
           subTitle: 'View all event details',
           url: state.userDetailsResponseModel.reposUrl,
           onTap: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) => UserRepoListPage(
-                        userId: widget.userId.toString(),
-                      )),
-            );
+            Navigator.pushNamed(context, RoutePaths.userRepoPage,
+                arguments: widget.userId.toString());
           }),
     ];
 
@@ -134,6 +134,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
           return Padding(
             padding: const EdgeInsets.only(left: 8.0, right: 8),
             child: Card(
+              elevation: 0,
+              color: AppColors.whiteColor,
               child: ListTile(
                 onTap: profileDetailCardItems[index].onTap,
                 title: Text(profileDetailCardItems[index].title.toString()),
@@ -148,7 +150,8 @@ class _UserDetailPageState extends State<UserDetailPage> {
 
   showCardDetail({required String title, required String subTitle}) {
     return Card(
-      color: AppColors.greyColor,
+      elevation: 0,
+      color: AppColors.whiteColor,
       child: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(children: [

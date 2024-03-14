@@ -4,4 +4,5 @@ class ApiUrls {
   static const String getAllusers = '/users';
   static const String getUserDetails = '/users/__userid__';
   static const String getUserReposList = '/users/__userid__/repos';
+  static const String search = '/search/users?q=__query__';
 }

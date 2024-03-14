@@ -33,6 +33,23 @@ class UserRepositories {
     }
   }
 
+  Future<Either<List<UsersListResponseModel>, ErrorModel>> getSearchResultRepo(
+      String query) async {
+    var res = await apiProvider.getSearchQuery(query);
+
+    if (res.statusCode == 200) {
+      List<UsersListResponseModel> data = List<UsersListResponseModel>.generate(
+          res.data['items'].length,
+          (index) => UsersListResponseModel.fromJson(res.data['items'][index]));
+      // SharedPref.setStringValue(ResString.dashboardSavedData, jsonEncode(data));
+      return Left(data);
+    } else {
+      showErrorToast(ResString.error);
+      return Right(ErrorModel(
+          code: res.statusCode, success: false, message: res.statusMessage));
+    }
+  }
+
   Future<Either<List<UsersListResponseModel>, ErrorModel>>
       getAllUsersListRepoCached() async {
     var saveddata =

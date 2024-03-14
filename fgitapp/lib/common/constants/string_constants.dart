@@ -7,6 +7,10 @@ class ResString {
   static const connectionTimeOutMsg = " Connection Timeout! try again";
   static const appTitle = 'fGitApp';
   static const refreshSuccess = 'Refreshed sucessfully!';
+  static const goBack = "Go back";
+  static const pageNotFound = "This page is under maintainance";
+
+  static const search = "Search Anything";
 
   // Keys for preferences.
 
