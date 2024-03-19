@@ -3,8 +3,8 @@ import 'package:fgitapp/features/users/domain/entity/user_entity.dart';
 
 class UserDetailsResponseModel extends UserDetailsModel {
   UserDetailsResponseModel(
-      {required String login,
-      required int? id,
+      {String? login,
+      int? id,
       String? nodeId,
       String? avatarUrl,
       String? url,
@@ -61,7 +61,7 @@ class UserDetailsResponseModel extends UserDetailsModel {
     organizationsUrl = json['organizations_url'];
     reposUrl = json['repos_url'];
     eventsUrl = json['events_url'];
-    receivedEventsUrl = json['received_events_url'];
+
     type = json['type'];
     siteAdmin = json['site_admin'];
     name = json['name'];
@@ -95,7 +95,7 @@ class UserDetailsResponseModel extends UserDetailsModel {
     data['organizations_url'] = organizationsUrl;
     data['repos_url'] = reposUrl;
     data['events_url'] = eventsUrl;
-    data['received_events_url'] = receivedEventsUrl;
+
     data['type'] = type;
     data['site_admin'] = siteAdmin;
     data['name'] = name;

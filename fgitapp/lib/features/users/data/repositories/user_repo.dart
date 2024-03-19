@@ -11,6 +11,7 @@ import 'package:fgitapp/features/users/data/models/user_detail_models.dart/user_
 import 'package:fgitapp/features/users/data/models/user_models/user_list_response_model.dart';
 import 'package:dartz/dartz.dart';
 import 'package:fgitapp/features/users/data/models/user_project_list_models.dart/user_projects_list_response_model.dart';
+import 'package:fgitapp/features/users/domain/entity/user_detail_entity.dart';
 import 'package:fgitapp/features/users/domain/entity/user_entity.dart';
 import 'package:fgitapp/features/users/domain/repository/user_repositories.dart';
 import 'package:fgitapp/helpers.dart/applog.dart';
@@ -19,23 +20,31 @@ import 'package:fgitapp/core/utils/pref_utils.dart';
 import 'package:fgitapp/core/utils/type_def.dart';
 import 'package:get_it/get_it.dart';
 
-typedef Future<List<UsersListModel>> _ConvertToEntity();
+typedef ConvertToUserListEntity = Future<List<UsersListModel>> Function();
+// ignore: prefer_generic_function_type_aliases
+typedef Future<UserDetailsModel> ConvertToUserDetailEntity();
 
 class UserDataRepositoriesImpl implements UserDataRepository {
   final apiProvider = GetIt.instance.get<UserDataApiSource>();
-  // final localProvider = GetIt.instance.get<UserDataLocalProvider>();
   UserDataRepositoriesImpl();
 
   @override
   ResultFuture<List<UsersListModel>> getUserDataList() async {
-    return await convertToEntity(() {
+    return await convertToUserListEntity(() {
       return apiProvider.getUserList();
     });
   }
 
-  ResultFuture<List<UsersListModel>> convertToEntity(
-      _ConvertToEntity _convertToEntity) async {
-    final remoteData = await _convertToEntity();
+  @override
+  ResultFuture<UserDetailsModel> getUserDetail(userId) async {
+    return await convertToUserDetailEntity(() {
+      return apiProvider.getUserDetails(userId);
+    });
+  }
+
+  ResultFuture<List<UsersListModel>> convertToUserListEntity(
+      ConvertToUserListEntity convertToEntity) async {
+    final remoteData = await convertToEntity();
     try {
       return Left(remoteData);
     } catch (e) {
@@ -43,11 +52,22 @@ class UserDataRepositoriesImpl implements UserDataRepository {
     }
   }
 
-  // @override
-  // ResultFuture<UsersListModel> getUserDetail() {
-  //   // TODO: implement getUserDetail
-  //   throw UnimplementedError();
-  // }
+  ResultFuture<UserDetailsModel> convertToUserDetailEntity(
+      ConvertToUserDetailEntity convertToUserDetailEntity) async {
+    final remoteData = await convertToUserDetailEntity();
+    try {
+      return Left(remoteData);
+    } catch (e) {
+      return Right(ErrorModel());
+    }
+  }
+
+  @override
+  ResultFuture<List<UsersListModel>> searchUserDataList(userId) async {
+    return await convertToUserListEntity(() {
+      return apiProvider.searchUserList(userId);
+    });
+  }
 
   // @override
   // ResultFuture<UsersListModel> getUserRepoDetails() {

@@ -1,10 +1,10 @@
-part of 'user_detail_bloc.dart';
+import 'package:equatable/equatable.dart';
 
-sealed class UserDetailEvent {
+abstract class UserDetailEvent extends Equatable {
   const UserDetailEvent();
 
-  // @override
-  // List<Object> get props => [];
+  @override
+  List<Object> get props => [];
 }
 
 class UserDetailInitialEvent extends UserDetailEvent {

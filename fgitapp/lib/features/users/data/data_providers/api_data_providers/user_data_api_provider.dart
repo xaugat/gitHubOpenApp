@@ -9,4 +9,5 @@ abstract class UserDataApiSource {
   Future<UserDetailsResponseModel> getUserDetails(String userId);
   Future<List<UserProjectListResponseModel>> getUserProjectsListRepo(
       String userId);
+  Future<List<UsersListResponseModel>> searchUserList(String userId);
 }

@@ -41,8 +41,8 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<UserBloc>(
             create: (BuildContext context) => getIt<UserBloc>()),
-        // BlocProvider<UserDetailBloc>(
-        //     create: (BuildContext context) => getIt<UserDetailBloc>()),
+        BlocProvider<UserDetailBloc>(
+            create: (BuildContext context) => getIt<UserDetailBloc>()),
         // BlocProvider<UserProjectsCubit>(
         //     create: (BuildContext context) => getIt<UserProjectsCubit>()),
         BlocProvider<SearchCubit>(

@@ -15,13 +15,13 @@ class RouteHandler {
         return MaterialPageRoute(
           builder: (_) => UserListPage(),
         );
-      // case RoutePaths.userDetailPage:
-      //   args as String;
-      //   return MaterialPageRoute(
-      //     builder: (_) => UserDetailPage(
-      //       userId: args,
-      //     ),
-      //   );
+      case RoutePaths.userDetailPage:
+        args as String;
+        return MaterialPageRoute(
+          builder: (_) => UserDetailPage(
+            userId: args,
+          ),
+        );
       // case RoutePaths.userRepoPage:
       //   args as String;
       //   return MaterialPageRoute(
@@ -29,10 +29,10 @@ class RouteHandler {
       //       userId: args,
       //     ),
       //   );
-      // case RoutePaths.searchPage:
-      //   return MaterialPageRoute(
-      //     builder: (_) => SearchFilterPage(),
-      //   );
+      case RoutePaths.searchPage:
+        return MaterialPageRoute(
+          builder: (_) => SearchFilterPage(),
+        );
       default:
         return _errorRoute();
     }
