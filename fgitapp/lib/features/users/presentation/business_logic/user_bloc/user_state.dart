@@ -12,7 +12,7 @@ class UserInitialState extends UserState {
 }
 
 class GetAllUsersSuccessState extends UserState {
-  final List<UsersListResponseModel> usersListResponseModel;
+  final List<UsersListModel> usersListResponseModel;
 
   const GetAllUsersSuccessState({required this.usersListResponseModel});
 }

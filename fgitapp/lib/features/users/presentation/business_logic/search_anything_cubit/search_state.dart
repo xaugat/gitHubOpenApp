@@ -10,7 +10,7 @@ sealed class SearchState extends Equatable {
 final class SearchInitial extends SearchState {}
 
 final class SearchDetailsFetchedSucessState extends SearchState {
-  final List<UsersListResponseModel> searchDetailsResponseModel;
+  final List<UsersListModel> searchDetailsResponseModel;
   SearchDetailsFetchedSucessState({required this.searchDetailsResponseModel});
 }
 

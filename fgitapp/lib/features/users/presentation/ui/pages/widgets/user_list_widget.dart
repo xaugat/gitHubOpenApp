@@ -1,8 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:fgitapp/common/constants/app_colors_constant.dart';
 import 'package:fgitapp/common/constants/app_text_style.dart';
-import 'package:fgitapp/features/users/business_logic/user_bloc/user_bloc.dart';
+import 'package:fgitapp/features/users/presentation/business_logic/user_bloc/user_bloc.dart';
 import 'package:fgitapp/features/users/presentation/ui/pages/user_detail_page.dart';
-import 'package:fgitapp/router/route_paths.dart';
+import 'package:fgitapp/config/router/route_paths.dart';
 
 import 'package:flutter/material.dart';
 
@@ -30,10 +31,11 @@ class UserListWidget extends StatelessWidget {
                         state.usersListResponseModel[index].login.toString(),
                   );
                 },
-                leading: ClipOval(
-                  child: Image.network(
-                    state.usersListResponseModel[index].avatarUrl.toString(),
-                  ),
+                leading: CircleAvatar(
+                  radius: 36,
+                  backgroundImage: CachedNetworkImageProvider(
+                      state.usersListResponseModel[index].avatarUrl.toString(),
+                      errorListener: (da) => Icon(Icons.error)),
                 ),
                 title: Text(
                   state.usersListResponseModel[index].login.toString(),

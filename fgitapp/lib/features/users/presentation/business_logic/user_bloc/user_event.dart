@@ -10,5 +10,5 @@ abstract class UserEvent extends Equatable {
 class UserInitialEvent extends UserEvent {}
 
 class GetAllUsersListEvent extends UserEvent {
-  const GetAllUsersListEvent();
+  GetAllUsersListEvent();
 }

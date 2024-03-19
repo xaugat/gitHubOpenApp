@@ -2,12 +2,12 @@ import 'package:fgitapp/common/constants/app_colors_constant.dart';
 import 'package:fgitapp/common/constants/app_text_style.dart';
 import 'package:fgitapp/common/constants/image_constant.dart';
 import 'package:fgitapp/common/constants/string_constants.dart';
-import 'package:fgitapp/common/widgets/app_bar/custom_app_bar.dart';
-import 'package:fgitapp/features/users/business_logic/user_bloc/user_bloc.dart';
+import 'package:fgitapp/features/users/presentation/business_logic/user_bloc/user_bloc.dart';
+
 import 'package:fgitapp/features/users/presentation/ui/pages/widgets/user_list_widget.dart';
 import 'package:fgitapp/helpers.dart/toast.dart';
-import 'package:fgitapp/router/route_paths.dart';
-import 'package:fgitapp/utils/pref_utils.dart';
+import 'package:fgitapp/config/router/route_paths.dart';
+import 'package:fgitapp/core/utils/pref_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -32,7 +32,7 @@ class _UserListPageState extends State<UserListPage> {
   }
 
   getUsersList() {
-    BlocProvider.of<UserBloc>(context).add(const GetAllUsersListEvent());
+    BlocProvider.of<UserBloc>(context).add(GetAllUsersListEvent());
   }
 
   @override

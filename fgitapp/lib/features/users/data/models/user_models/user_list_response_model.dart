@@ -1,62 +1,59 @@
-class UsersListResponseModel {
-  String? login;
-  int? id;
-  String? nodeId;
-  String? avatarUrl;
-  String? gravatarId;
-  String? url;
-  String? htmlUrl;
-  String? followersUrl;
-  String? followingUrl;
-  String? gistsUrl;
-  String? starredUrl;
-  String? subscriptionsUrl;
-  String? organizationsUrl;
-  String? reposUrl;
-  String? eventsUrl;
-  String? receivedEventsUrl;
-  String? type;
-  bool? siteAdmin;
+import 'package:fgitapp/features/users/domain/entity/user_entity.dart';
 
+class UsersListResponseModel extends UsersListModel {
   UsersListResponseModel(
-      {this.login,
-      this.id,
-      this.nodeId,
-      this.avatarUrl,
-      this.gravatarId,
-      this.url,
-      this.htmlUrl,
-      this.followersUrl,
-      this.followingUrl,
-      this.gistsUrl,
-      this.starredUrl,
-      this.subscriptionsUrl,
-      this.organizationsUrl,
-      this.reposUrl,
-      this.eventsUrl,
-      this.receivedEventsUrl,
-      this.type,
-      this.siteAdmin});
-
-  UsersListResponseModel.fromJson(Map<String, dynamic> json) {
-    login = json['login'];
-    id = json['id'];
-    nodeId = json['node_id'];
-    avatarUrl = json['avatar_url'];
-    gravatarId = json['gravatar_id'];
-    url = json['url'];
-    htmlUrl = json['html_url'];
-    followersUrl = json['followers_url'];
-    followingUrl = json['following_url'];
-    gistsUrl = json['gists_url'];
-    starredUrl = json['starred_url'];
-    subscriptionsUrl = json['subscriptions_url'];
-    organizationsUrl = json['organizations_url'];
-    reposUrl = json['repos_url'];
-    eventsUrl = json['events_url'];
-    receivedEventsUrl = json['received_events_url'];
-    type = json['type'];
-    siteAdmin = json['site_admin'];
+      {required String login,
+      required int id,
+      required String nodeId,
+      required String avatarUrl,
+      required String gravatarId,
+      required String url,
+      required String followersUrl,
+      required String followingUrl,
+      required String gistsUrl,
+      required String starredUrl,
+      required String subscriptionsUrl,
+      required String organizationsUrl,
+      required String reposUrl,
+      required String eventsUrl,
+      required String receivedEventsUrl,
+      required String type,
+      required bool siteAdmin})
+      : super(
+            login: login,
+            id: id,
+            nodeId: nodeId,
+            avatarUrl: avatarUrl,
+            gravatarId: gravatarId,
+            url: url,
+            followersUrl: followersUrl,
+            followingUrl: followingUrl,
+            gistsUrl: gistsUrl,
+            starredUrl: starredUrl,
+            subscriptionsUrl: subscriptionsUrl,
+            organizationsUrl: organizationsUrl,
+            reposUrl: reposUrl,
+            type: type,
+            siteAdmin: siteAdmin);
+  factory UsersListResponseModel.fromJson(Map<String, dynamic> json) {
+    return UsersListResponseModel(
+        login: json['login'],
+        id: json['id'],
+        nodeId: json['node_id'],
+        avatarUrl: json['avatar_url'],
+        gravatarId: json['gravatar_id'],
+        url: json['url'],
+        followersUrl: json['followers_url'],
+        followingUrl: json['following_url'],
+        gistsUrl: json['gists_url'],
+        starredUrl: json['starred_url'],
+        subscriptionsUrl: json['subscriptions_url'],
+        organizationsUrl: json['organizations_url'],
+        reposUrl: json['repos_url'],
+        eventsUrl: json['events_url'],
+        receivedEventsUrl: json['received_events_url'],
+        type: json['type'],
+        siteAdmin: json['site_admin']);
   }
 
   Map<String, dynamic> toJson() {
@@ -67,7 +64,7 @@ class UsersListResponseModel {
     data['avatar_url'] = avatarUrl;
     data['gravatar_id'] = gravatarId;
     data['url'] = url;
-    data['html_url'] = htmlUrl;
+
     data['followers_url'] = followersUrl;
     data['following_url'] = followingUrl;
     data['gists_url'] = gistsUrl;

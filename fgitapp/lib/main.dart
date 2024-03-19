@@ -1,14 +1,15 @@
-import 'package:fgitapp/features/users/business_logic/search_anything_cubit/search_cubit.dart';
-import 'package:fgitapp/features/users/business_logic/user_bloc/user_bloc.dart';
-import 'package:fgitapp/features/users/business_logic/user_detail_bloc/user_detail_bloc.dart';
-import 'package:fgitapp/features/users/business_logic/user_repo_cubit/user_projects_cubit.dart';
+import 'package:fgitapp/features/users/presentation/business_logic/search_anything_cubit/search_cubit.dart';
+import 'package:fgitapp/features/users/presentation/business_logic/user_bloc/user_bloc.dart';
+import 'package:fgitapp/features/users/presentation/business_logic/user_detail_bloc/user_detail_bloc.dart';
 import 'package:fgitapp/injector.dart/app_injector.dart';
 import 'package:fgitapp/helpers.dart/get_root_url.dart';
 import 'package:fgitapp/features/users/presentation/ui/pages/user_list_page.dart';
-import 'package:fgitapp/router/route_handler.dart';
-import 'package:fgitapp/utils/pref_utils.dart';
+import 'package:fgitapp/config/router/route_handler.dart';
+import 'package:fgitapp/core/utils/pref_utils.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import 'features/users/presentation/business_logic/user_repo_cubit/user_projects_cubit.dart';
 
 void main() async {
   AppBuilder.runWithConfig(
@@ -40,10 +41,10 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<UserBloc>(
             create: (BuildContext context) => getIt<UserBloc>()),
-        BlocProvider<UserDetailBloc>(
-            create: (BuildContext context) => getIt<UserDetailBloc>()),
-        BlocProvider<UserProjectsCubit>(
-            create: (BuildContext context) => getIt<UserProjectsCubit>()),
+        // BlocProvider<UserDetailBloc>(
+        //     create: (BuildContext context) => getIt<UserDetailBloc>()),
+        // BlocProvider<UserProjectsCubit>(
+        //     create: (BuildContext context) => getIt<UserProjectsCubit>()),
         BlocProvider<SearchCubit>(
             create: (BuildContext context) => getIt<SearchCubit>()),
       ],
