@@ -36,39 +36,39 @@ class UserDataApiSourceImpl implements UserDataApiSource {
   }
 
   @override
-  Future<List<UserProjectListResponseModel>> getUserProjectsListRepo(
+  ResultFuture<List<RepositoryModel>> getUserProjectsListRepo(
       String userId) async {
     var res = await callApi
         .getData(ApiUrls.getUserReposList.replaceFirst('__userid__', userId));
 
     if (res.statusCode == 200) {
-      List<UserProjectListResponseModel> data =
-          List<UserProjectListResponseModel>.generate(
-              res.data.length,
-              (index) =>
-                  UserProjectListResponseModel.fromJson(res.data[index]));
-      return data;
+      List<RepositoryModel> data = List<RepositoryModel>.generate(
+          res.data.length,
+          (index) => RepositoryModel.fromJson(res.data[index]));
+      return Left(data);
     } else {
       showErrorToast(res.statusMessage.toString());
-      throw ServerException();
+      return Right(ErrorModel(
+          code: res.statusCode, message: res.statusMessage, success: false));
     }
   }
 
   @override
-  Future<UserDetailsResponseModel> getUserDetails(String userId) async {
+  ResultFuture<UserDetailsResponseModel> getUserDetails(String userId) async {
     var res = await callApi
         .getData(ApiUrls.getUserDetails.replaceFirst('__userid__', userId));
 
     if (res.statusCode == 200) {
-      return UserDetailsResponseModel.fromJson(res.data);
+      return Left(UserDetailsResponseModel.fromJson(res.data));
     } else {
       showErrorToast(res.statusMessage.toString());
-      throw ServerException();
+      return Right(ErrorModel(
+          code: res.statusCode, message: res.statusMessage, success: false));
     }
   }
 
   @override
-  Future<List<UsersListResponseModel>> getUserList() async {
+  ResultFuture<List<UsersListResponseModel>> getUserList() async {
     var res = await callApi.getData(ApiUrls.getAllusers);
 
     if (res.statusCode == 200) {
@@ -77,15 +77,17 @@ class UserDataApiSourceImpl implements UserDataApiSource {
           res.data.length,
           (index) => UsersListResponseModel.fromJson(res.data[index]));
       SharedPref.setStringValue(ResString.dashboardSavedData, jsonEncode(data));
-      return data;
+      return Left(data);
     } else {
       showErrorToast(ResString.error);
-      throw ServerException();
+      return Right(ErrorModel(
+          code: res.statusCode, message: res.statusMessage, success: false));
     }
   }
 
   @override
-  Future<List<UsersListResponseModel>> searchUserList(String query) async {
+  ResultFuture<List<UsersListResponseModel>> searchUserList(
+      String query) async {
     var res =
         await callApi.getData(ApiUrls.search.replaceFirst('__query__', query));
 
@@ -94,10 +96,11 @@ class UserDataApiSourceImpl implements UserDataApiSource {
           res.data['items'].length,
           (index) => UsersListResponseModel.fromJson(res.data['items'][index]));
 
-      return data;
+      return Left(data);
     } else {
       showErrorToast(ResString.error);
-      throw ServerException();
+      return Right(ErrorModel(
+          code: res.statusCode, message: res.statusMessage, success: false));
     }
   }
 }

@@ -1,4 +1,8 @@
-class UserDetailsModel {
+// ignore_for_file: must_be_immutable
+
+import 'package:equatable/equatable.dart';
+
+class UserDetailsModel extends Equatable {
   String? login;
   int? id;
   String? nodeId;
@@ -56,4 +60,33 @@ class UserDetailsModel {
       this.following,
       this.createdAt,
       this.updatedAt});
+
+  @override
+  List<Object?> get props => [
+        login,
+        id,
+        nodeId,
+        avatarUrl,
+        url,
+        followersUrl,
+        followingUrl,
+        organizationsUrl,
+        reposUrl,
+        eventsUrl,
+        type,
+        siteAdmin,
+        name,
+        company,
+        blog,
+        location,
+        email,
+        hireable,
+        bio,
+        twitterUsername,
+        publicRepos,
+        followers,
+        following,
+        createdAt,
+        updatedAt
+      ];
 }

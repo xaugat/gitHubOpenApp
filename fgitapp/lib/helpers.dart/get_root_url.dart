@@ -1,5 +1,5 @@
+import 'package:fgitapp/app_builder.dart';
 import 'package:fgitapp/common/constants/api_constants.dart';
-import 'package:fgitapp/main.dart';
 
 String getRootUrl(BuildFlavor buildFlavor) {
   // you can add various baseurls according to your flavor

@@ -1,4 +1,6 @@
-class UsersListModel {
+import 'package:equatable/equatable.dart';
+
+class UsersListModel extends Equatable {
   String? login;
   int? id;
   String? nodeId;
@@ -37,4 +39,26 @@ class UsersListModel {
       this.receivedEventsUrl,
       this.type,
       this.siteAdmin});
+
+  @override
+  List<Object?> get props => [
+        login,
+        id,
+        nodeId,
+        avatarUrl,
+        gravatarId,
+        url,
+        htmlUrl,
+        followersUrl,
+        followingUrl,
+        gistsUrl,
+        starredUrl,
+        subscriptionsUrl,
+        organizationsUrl,
+        reposUrl,
+        eventsUrl,
+        receivedEventsUrl,
+        type,
+        siteAdmin
+      ];
 }

@@ -5,9 +5,8 @@ import 'package:fgitapp/features/users/data/models/user_project_list_models.dart
 import 'package:fgitapp/features/users/presentation/ui/pages/user_repo_list_page.dart';
 
 abstract class UserDataApiSource {
-  Future<List<UsersListResponseModel>> getUserList();
-  Future<UserDetailsResponseModel> getUserDetails(String userId);
-  Future<List<UserProjectListResponseModel>> getUserProjectsListRepo(
-      String userId);
-  Future<List<UsersListResponseModel>> searchUserList(String userId);
+  ResultFuture<List<UsersListResponseModel>> getUserList();
+  ResultFuture<UserDetailsResponseModel> getUserDetails(String userId);
+  ResultFuture<List<RepositoryModel>> getUserProjectsListRepo(String userId);
+  ResultFuture<List<UsersListResponseModel>> searchUserList(String userId);
 }

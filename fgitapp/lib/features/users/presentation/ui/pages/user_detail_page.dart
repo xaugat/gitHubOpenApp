@@ -63,9 +63,15 @@ class _UserDetailPageState extends State<UserDetailPage> {
                       style: AppTextStyle.heading
                           .copyWith(color: AppColors.appThemeColor),
                     ),
-                    Text(
-                      state.userDetailsResponseModel.bio ?? '',
-                      style: AppTextStyle.subtitle,
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        state.userDetailsResponseModel.bio ?? '',
+                        style: AppTextStyle.subtitle,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 5,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -95,6 +101,10 @@ class _UserDetailPageState extends State<UserDetailPage> {
               return Center(
                 child: Text(ResString.error),
               );
+            } else if (state is UserDetailInitial) {
+              return Center(
+                child: CircularProgressIndicator(),
+              );
             } else {
               return Center(
                 child: CircularProgressIndicator(),
@@ -111,13 +121,13 @@ class _UserDetailPageState extends State<UserDetailPage> {
           subTitle: 'View all repositories details',
           url: state.userDetailsResponseModel.reposUrl,
           onTap: () {
-            // Navigator.push(
-            //   context,
-            //   MaterialPageRoute(
-            //       builder: (context) => UserRepoListPage(
-            //             userId: widget.userId.toString(),
-            //           )),
-            // );
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) => UserRepoListPage(
+                        userId: widget.userId.toString(),
+                      )),
+            );
           }),
       UserProfileDetail(
           title: 'Events',

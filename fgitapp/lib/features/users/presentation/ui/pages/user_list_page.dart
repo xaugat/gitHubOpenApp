@@ -125,11 +125,22 @@ class _UserListPageState extends State<UserListPage> {
             child: CircularProgressIndicator(),
           );
         } else if (state is GetAllUsersFailureState) {
-          return Center(
-              child: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Text(state.errorModel.message.toString()),
-          ));
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Center(
+                  child: Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(state.errorModel.message.toString()),
+              )),
+              ElevatedButton(
+                  onPressed: () {
+                    Navigator.popAndPushNamed(context, '/');
+                  },
+                  child: Text('Try again!'))
+            ],
+          );
         } else {
           return const Center(
             child: CircularProgressIndicator(),

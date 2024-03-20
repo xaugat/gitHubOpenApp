@@ -8,6 +8,7 @@ import 'package:fgitapp/features/users/data/repositories/user_repo.dart';
 import 'package:fgitapp/features/users/domain/repository/user_repositories.dart';
 import 'package:fgitapp/features/users/domain/use_cases/filter_user_usecase.dart';
 import 'package:fgitapp/features/users/domain/use_cases/user_detail_usecase.dart';
+import 'package:fgitapp/features/users/domain/use_cases/user_repo_details_usecase.dart';
 import 'package:fgitapp/features/users/domain/use_cases/user_usecase.dart';
 import 'package:fgitapp/features/users/presentation/business_logic/search_anything_cubit/search_cubit.dart';
 import 'package:fgitapp/features/users/presentation/business_logic/user_bloc/user_bloc.dart';
@@ -32,9 +33,11 @@ Future setupDi(String baseUrl) async {
 
   getIt.registerSingleton<FilterUserList>(FilterUserList(getIt()));
 
+  getIt.registerSingleton<GetUserRepoDetails>(GetUserRepoDetails(getIt()));
+
   // injecting the repositories so that it will use the same instance all over the app
   getIt.registerSingleton<UserBloc>(UserBloc(UserInitialState()));
   getIt.registerSingleton<UserDetailBloc>(UserDetailBloc(UserDetailInitial()));
-  // getIt.registerSingleton<UserProjectsCubit>(UserProjectsCubit());
+  getIt.registerSingleton<UserProjectsCubit>(UserProjectsCubit());
   getIt.registerSingleton<SearchCubit>(SearchCubit());
 }

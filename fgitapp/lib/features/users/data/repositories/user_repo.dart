@@ -13,6 +13,7 @@ import 'package:dartz/dartz.dart';
 import 'package:fgitapp/features/users/data/models/user_project_list_models.dart/user_projects_list_response_model.dart';
 import 'package:fgitapp/features/users/domain/entity/user_detail_entity.dart';
 import 'package:fgitapp/features/users/domain/entity/user_entity.dart';
+import 'package:fgitapp/features/users/domain/entity/user_repo_detail_entity.dart';
 import 'package:fgitapp/features/users/domain/repository/user_repositories.dart';
 import 'package:fgitapp/helpers.dart/applog.dart';
 import 'package:fgitapp/helpers.dart/toast.dart';
@@ -20,9 +21,10 @@ import 'package:fgitapp/core/utils/pref_utils.dart';
 import 'package:fgitapp/core/utils/type_def.dart';
 import 'package:get_it/get_it.dart';
 
-typedef ConvertToUserListEntity = Future<List<UsersListModel>> Function();
+typedef ConvertToUserListEntity = ResultFuture<List<UsersListModel>> Function();
 // ignore: prefer_generic_function_type_aliases
-typedef Future<UserDetailsModel> ConvertToUserDetailEntity();
+typedef ResultFuture<UserDetailsModel> ConvertToUserDetailEntity();
+typedef ResultFuture<List<RepositoryEntity>> ConvertToUserRepoDetailEntity();
 
 class UserDataRepositoriesImpl implements UserDataRepository {
   final apiProvider = GetIt.instance.get<UserDataApiSource>();
@@ -45,21 +47,28 @@ class UserDataRepositoriesImpl implements UserDataRepository {
   ResultFuture<List<UsersListModel>> convertToUserListEntity(
       ConvertToUserListEntity convertToEntity) async {
     final remoteData = await convertToEntity();
-    try {
-      return Left(remoteData);
-    } catch (e) {
-      return Right(ErrorModel());
-    }
+    return remoteData.fold(
+        (l) => Left(l),
+        (r) => Right(
+            ErrorModel(code: r.code, success: r.success, message: r.message)));
   }
 
   ResultFuture<UserDetailsModel> convertToUserDetailEntity(
       ConvertToUserDetailEntity convertToUserDetailEntity) async {
     final remoteData = await convertToUserDetailEntity();
-    try {
-      return Left(remoteData);
-    } catch (e) {
-      return Right(ErrorModel());
-    }
+    return remoteData.fold(
+        (l) => Left(l),
+        (r) => Right(
+            ErrorModel(code: r.code, success: r.success, message: r.message)));
+  }
+
+  ResultFuture<List<RepositoryEntity>> convertToUserRepoDetailEntity(
+      ConvertToUserRepoDetailEntity convertToUserRepoDetailEntity) async {
+    final remoteData = await convertToUserRepoDetailEntity();
+    return remoteData.fold(
+        (l) => Left(l),
+        (r) => Right(
+            ErrorModel(code: r.code, success: r.success, message: r.message)));
   }
 
   @override
@@ -69,9 +78,10 @@ class UserDataRepositoriesImpl implements UserDataRepository {
     });
   }
 
-  // @override
-  // ResultFuture<UsersListModel> getUserRepoDetails() {
-  //   // TODO: implement getUserRepoDetails
-  //   throw UnimplementedError();
-  // }
+  @override
+  ResultFuture<List<RepositoryEntity>> getUserRepoDetails(loginId) async {
+    return await convertToUserRepoDetailEntity(() {
+      return apiProvider.getUserProjectsListRepo(loginId);
+    });
+  }
 }
