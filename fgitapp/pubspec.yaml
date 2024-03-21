@@ -46,11 +46,15 @@ dependencies:
   webview_flutter: ^4.2.4
   shared_preferences: ^2.2.2
   carousel_slider: ^4.2.1
+  http: ^1.1.0
 
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  mockito: 
+  mocktail: ^1.0.3
+  build_runner: ^2.4.8
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

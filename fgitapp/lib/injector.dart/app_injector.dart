@@ -22,9 +22,9 @@ Future setupDi(String baseUrl) async {
   getIt.registerFactory<CallApi>(() => CallApi(
       (baseUrl))); // injecting base url from root of app for build flavor
 
-  // getIt.registerSingleton<UserDataProvider>(UserDataProvider(getIt()));
-
   getIt.registerSingleton<UserDataApiSource>(UserDataApiSourceImpl(getIt()));
+
+  // injecting the repositories so that it will use the same instance all over the app
 
   getIt.registerSingleton<UserDataRepository>(UserDataRepositoriesImpl());
   getIt.registerSingleton<GetUserList>(GetUserList(getIt()));
@@ -35,7 +35,7 @@ Future setupDi(String baseUrl) async {
 
   getIt.registerSingleton<GetUserRepoDetails>(GetUserRepoDetails(getIt()));
 
-  // injecting the repositories so that it will use the same instance all over the app
+  // injecting the blocs so that it will use the same instance all over the app
   getIt.registerSingleton<UserBloc>(UserBloc(UserInitialState()));
   getIt.registerSingleton<UserDetailBloc>(UserDetailBloc(UserDetailInitial()));
   getIt.registerSingleton<UserProjectsCubit>(UserProjectsCubit());
